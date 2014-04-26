@@ -58,19 +58,81 @@ set.
 
 Script
 --------------------------------------------------------
+The script **run_Analysis.R** is self-contained once the working
+directory is set and the required libraries - reshape2 and knitr - are
+made available to the R runtime.
 
+The script processes the dataset as follows:
 
-#### Example Run Against Tidy Dataset
+#### Initialization
+* loads the required libraries
+* reads and stores the mean and std column labels (feature names) and ordinals from text files in the working directory
+* reads the activity labels and ordinals which will be used to translate numeric
+activity identifiers to reader-friendly activity names, e.g. activity
+identifier **1** will be converted to **Walking** later on.
 
+#### Process Test Data
+* read data from test directory into __raw_test__
+* extract columns from same and store in __test__
+* reads subject and activity identifiers from their text files, save in __test_subjects__
+and __test_activities__
+* binds subject and activity columns to __test__ and sets the column
+names for all 68 columns
+* change activity identifiers to reader-friendly labels
+* delete __raw_test__ to re-claim used memory.
 
+#### Process Train Data
+Processing train data is the same as for test data except for the dataset
+and variable names.
 
-```{r}
-summary(cars)
+* read data from train directory into __raw_train__
+* extract columns from same and store in __train__
+* reads subject and activity identifiers from their text files, save in __train_subjects__
+and __train_activities__
+* binds subject and activity columns to __train__ and sets the column
+names for all 68 columns
+* change activity identifiers to reader-friendly labels
+* delete __raw_train__ to re-claim used memory.
+
+#### Combine Files
+* processed test and train datasets are combined with a simple row bind
+and stored in variable __final__.
+* save __final__ to local disk as a _csv_ file for later use and to allow
+import into other software such as Excel, MATLAB et al. *Always give the user choices!*
+
+#### Tidy Dataset
+* run __final__ through _melt_ and save results in __final_melt__. 
+* specify _Activity_ and  _Subject_ columns as the _id_ columns
+* cast __final_melt__ using _dcast_ and specifying 
+_mean_ as the function argumnet, save results in __tidy_data__.
+* __tidy_data__ is saved to local disk as a _csv_ for later use or import into other
+software such as Excel, MATLAB et al.
+
+#### Example Using Tidy Dataset
+
+Obtain quantiles of the "Mean X Body Acceleration" values
+for all 30 subjects while 'WALKING':     
 ```
+quantile(tidy_data[tidy_data[,1]=="WALKING",3])
+```
+Using this, one can determine if there is enough variance in this
+measurement to be useful for classification purposes.
 
-You can also embed plots, for example:
-
-```{r fig.width=7, fig.height=6}
+This code generates a plot of the same data:
+```
 plot(tidy_data$Subject[1:30],tidy_data[tidy_data[,1]=="WALKING",3],xlab="Subject",ylab="Acceleration, ft/sec^2",main="Subjects' Mean Body Acceleration (X)")
 ```
+
+Closure
+--------------------------------------------------------
+A similar html version of this file can be found in this repository or using
+this link: https://github.com/tqsclass/coursera/blob/master/GettingCleaninData/run_Analysis.html
+You may need the latest version of _git_ to see it displayed as _html_, however.
+
+It presents the script and comments inline more neatly than this
+Markdown format.  I used code blocks at the very end of the file, but
+didn't use them throughout this document because, to my eye, it
+hindered readability.
+
+
 
