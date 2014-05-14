@@ -2,7 +2,6 @@ coursera
 ========
 
 
-Data Science Specialization April 2014
+Working folder for _Data Science Specialization_ April - June 2014
 
-* Folder GettingCleaninData contains Peer Assessment assignment for Getting and Cleaning Data.
  
