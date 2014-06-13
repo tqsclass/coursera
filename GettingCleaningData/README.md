@@ -126,7 +126,7 @@ plot(tidy_data$Subject[1:30],tidy_data[tidy_data[,1]=="WALKING",3],xlab="Subject
 Closure
 --------------------------------------------------------
 A similar html version of this file can be found in this repository or using
-this link: https://github.com/tqsclass/coursera/blob/master/GettingCleaninData/run_Analysis.html
+this link: https://github.com/tqsclass/coursera/blob/master/GettingCleaningData/run_Analysis.html
 You may need the latest version of _git_ to see it displayed as _html_, however.
 
 It presents the script and comments inline more neatly than this
